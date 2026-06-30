@@ -8,6 +8,6 @@ require('yazi').setup({
 })
 
 -- Map it to Space + e (Explore)
-vim.keymap.set('n', '<leader>e', function()
+vim.keymap.set('n', '<leader>y', function()
   require('yazi').yazi()
 end, { desc = 'Open Yazi File Manager' })
