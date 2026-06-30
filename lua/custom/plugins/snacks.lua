@@ -6,9 +6,15 @@ vim.pack.add {
 require('snacks').setup({
   explorer = { enabled = true },
   picker = { enabled = true },
+  lazygit = { enabled = true },
 })
 
--- Using require('snacks') explicitly makes the LSP warning disappear completely
+-- Open Snacks Explorer (Your sidebar)
 vim.keymap.set('n', '<leader>e', function()
   require('snacks').explorer()
-end, { desc = 'Open Snacks Explorer with Top Search Bar' })
+end, { desc = 'Open Snacks Explorer' })
+
+-- 2. Open Lazygit in a gorgeous floating terminal frame
+vim.keymap.set('n', '<leader>gg', function()
+  require('snacks').lazygit.open()
+end, { desc = 'Open Lazygit Overlay' })
