@@ -35,7 +35,7 @@ vim.keymap.set('n', '<leader>Fq', ':FlutterQuit<CR>',    { desc = 'Flutter: Term
 vim.keymap.set('n', '<leader>Fd', ':FlutterDevices<CR>', { desc = 'Flutter: Select Device/Emulator' })
 
 -- 2. Visual Log Stream (Your VS Code Debug Console)
-vim.keymap.set('n', '<leader>Fl', ':FlutterLogOpen<CR>', { desc = 'Flutter: Open Debug Log Console' })
+vim.keymap.set('n', '<leader>Fl', ':FlutterLogToggle<CR>', { desc = 'Flutter: Toggle Debug Log Console' })
 
 -- 3. Manual Hot Controls (Though it auto-reloads on file save!)
 vim.keymap.set('n', '<leader>Fh', ':FlutterReload<CR>',  { desc = 'Flutter: Hot Reload App' })

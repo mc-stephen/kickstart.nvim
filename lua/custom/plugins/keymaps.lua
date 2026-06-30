@@ -46,3 +46,12 @@ vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format({ async = true }
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code: Available Actions' })
 vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename,      { desc = 'Code: Rename Smart Variable' })
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Code: Line Diagnostics/Errors' })
+
+-- ====================================================================
+-- Terminal
+-- ====================================================================
+vim.keymap.set("n", "<leader>tt", function() Snacks.terminal.toggle() end, { desc = "Terminal: Toggle Float" })
+vim.keymap.set("n", "<leader>ts", function() Snacks.terminal.open(nil, { win = { position = "bottom" } }) end, { desc = "Terminal: Open Horizontal Split" })
+
+-- This lets you toggle the floating terminal from Normal mode AND inside the terminal itself!
+vim.keymap.set({ "n", "t" }, "<C-/>", function() Snacks.terminal.toggle() end, { desc = "Toggle Terminal" })
