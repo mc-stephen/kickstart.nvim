@@ -36,3 +36,16 @@ vim.keymap.set('n', '<leader>dt', dap.terminate,         { desc = 'Debug: Stop D
 
 -- 3. Toggle UI manually if needed
 vim.keymap.set('n', '<leader>du', dapui.toggle,          { desc = 'Debug: Toggle UI Panels' })
+
+-- ====================================================================
+--
+-- ====================================================================
+-- Modern, non-deprecated way to load VS Code launch configurations
+local vscode = require('dap.ext.vscode')
+
+-- This maps the VS Code "dart" type directly to Neovim's dart/flutter filetype
+-- nvim-dap will now automatically load .vscode/launch.json using this mapping.
+vscode.type_to_filetypes = {
+  dart = { 'dart' }
+}
+

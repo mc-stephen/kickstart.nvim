@@ -30,13 +30,13 @@ require('flutter-tools').setup {
 -- ====================================================================
 
 -- 1. Boot up and target controls
-vim.keymap.set('n', '<leader>Fr', ':FlutterRun<CR>',     { desc = 'Flutter: Run Project' })
-vim.keymap.set('n', '<leader>Fq', ':FlutterQuit<CR>',    { desc = 'Flutter: Terminate App' })
+vim.keymap.set('n', '<leader>Fr', ':FlutterRun<CR>', { desc = 'Flutter: Run Project' })
+vim.keymap.set('n', '<leader>Fq', ':FlutterQuit<CR>', { desc = 'Flutter: Terminate App' })
 vim.keymap.set('n', '<leader>Fd', ':FlutterDevices<CR>', { desc = 'Flutter: Select Device/Emulator' })
 
 -- 2. Visual Log Stream (Your VS Code Debug Console)
 vim.keymap.set('n', '<leader>Fl', ':FlutterLogToggle<CR>', { desc = 'Flutter: Toggle Debug Log Console' })
 
 -- 3. Manual Hot Controls (Though it auto-reloads on file save!)
-vim.keymap.set('n', '<leader>Fh', ':FlutterReload<CR>',  { desc = 'Flutter: Hot Reload App' })
+vim.keymap.set('n', '<leader>Fh', ':FlutterReload<CR>', { desc = 'Flutter: Hot Reload App' })
 vim.keymap.set('n', '<leader>FH', ':FlutterRestart<CR>', { desc = 'Flutter: Hot Restart App' })
