@@ -14,10 +14,10 @@ vim.keymap.set('n', '<leader>wo', '<C-w>o', { desc = 'Window: Close All Other Sp
 vim.keymap.set('n', '<leader>w=', '<C-w>=', { desc = 'Window: Make Equal Size' })
 
 -- Method B: The Arrow Key Backup Way (Mac-safe sequence)
-vim.keymap.set('n', '<leader>w<Up>',    ':resize +2<CR>',          { desc = 'Window: Resize Up (Arrow)' })
-vim.keymap.set('n', '<leader>w<Down>',  ':resize -2<CR>',          { desc = 'Window: Resize Down (Arrow)' })
-vim.keymap.set('n', '<leader>w<Left>',  ':vertical resize -2<CR>', { desc = 'Window: Resize Left (Arrow)' })
-vim.keymap.set('n', '<leader>w<Right>', ':vertical resize +2<CR>', { desc = 'Window: Resize Right (Arrow)' })
+-- vim.keymap.set('n', '<leader>w<Up>',    ':resize +2<CR>',          { desc = 'Window: Resize Up (Arrow)' })
+-- vim.keymap.set('n', '<leader>w<Down>',  ':resize -2<CR>',          { desc = 'Window: Resize Down (Arrow)' })
+-- vim.keymap.set('n', '<leader>w<Left>',  ':vertical resize -2<CR>', { desc = 'Window: Resize Left (Arrow)' })
+-- vim.keymap.set('n', '<leader>w<Right>', ':vertical resize +2<CR>', { desc = 'Window: Resize Right (Arrow)' })
 
 -- KITTY & MAC-SAFE FLUID RESIZING (Hold Alt/Option + Arrow Keys)
 vim.keymap.set('n', '<M-Up>',    ':resize +4<CR>',          { desc = 'Window: Continuous Resize Up' })
@@ -55,3 +55,18 @@ vim.keymap.set("n", "<leader>ts", function() Snacks.terminal.open(nil, { win = {
 
 -- This lets you toggle the floating terminal from Normal mode AND inside the terminal itself!
 vim.keymap.set({ "n", "t" }, "<C-/>", function() Snacks.terminal.toggle() end, { desc = "Toggle Terminal" })
+
+-- ====================================================================
+-- EASILY MOVE LINES OF CODE BLOCKS
+-- ====================================================================
+-- Move lines up and down in Normal mode
+vim.keymap.set('n', '<C-S-Down>', '<cmd>m .+1<cr>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<C-S-Up>', '<cmd>m .-2<cr>==', { desc = 'Move line up' })
+
+-- Move lines up and down in Insert mode
+vim.keymap.set('i', '<C-S-Down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move line down' })
+vim.keymap.set('i', '<C-S-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move line up' })
+
+-- Move selected blocks up and down in Visual mode
+vim.keymap.set('v', '<C-S-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move block down' })
+vim.keymap.set('v', '<C-S-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move block up' })
