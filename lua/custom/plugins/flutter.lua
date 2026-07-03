@@ -22,13 +22,13 @@ require('flutter-tools').setup {
   debugger = {
     enabled = true,
     run_via_dap = true, -- Plugs natively into your new DAP visual engine
-    register_configurations = function()
+    register_configurations = function(paths)
       -- 1. Ensure the path-aware Dart debug adapter is registered
-      -- require('dap').adapters.dart = {
-      --   type = 'executable',
-      --   command = paths.flutter_bin,
-      --   args = { 'debug-adapter' },
-      -- }
+      require('dap').adapters.dart = {
+        type = 'executable',
+        command = paths.flutter_bin,
+        args = { 'debug-adapter' },
+      }
 
       -- 2. Explicitly pull and filter configurations without using deprecated hooks
       if vim.fn.filereadable '.vscode/launch.json' == 1 then

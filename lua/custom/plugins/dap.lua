@@ -45,8 +45,8 @@ vscode.type_to_filetypes = {
 -- REGISTER THE DART DEBUG ADAPTER 🎯
 -- ====================================================================
 -- This tells nvim-dap exactly how to launch the backend Dart debug engine
--- dap.adapters.dart = {
---   type = 'executable',
---   command = 'flutter',          -- Uses your global flutter binary
---   args = { 'debug-adapter' },   -- Tells flutter to start up in debugging mode
--- }
+dap.adapters.dart = {
+  type = 'executable',
+  command = 'flutter',          -- Uses your global flutter binary
+  args = { 'debug-adapter' },   -- Tells flutter to start up in debugging mode
+}

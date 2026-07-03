@@ -70,3 +70,26 @@ vim.keymap.set('i', '<C-S-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move line u
 -- Move selected blocks up and down in Visual mode
 vim.keymap.set('v', '<C-S-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move block down' })
 vim.keymap.set('v', '<C-S-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move block up' })
+
+-- ====================================================================
+-- DYNAMIC LSP KEYMAPS (Activates only when a Code Engine is running)
+-- ====================================================================
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+  callback = function(event)
+    -- Helper function to quickly define LSP-specific mappings
+    local map = function(keys, func, desc)
+      vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+    end
+
+    -- The "Go To" family under 'g'
+    -- map('gd', function() require('snacks').picker.lsp_definitions() end, '[G]oto [D]efinition')
+    -- map('gr', function() require('snacks').picker.lsp_references() end, '[G]oto [R]eferences')
+    -- map('gI', function() require('snacks').picker.lsp_implementations() end, '[G]oto [I]mplementation')
+    -- map('gy', function() require('snacks').picker.lsp_type_definitions() end, 'Type [D]efinition')
+    -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+    -- Documentation Hover (Show function signatures/docs)
+    -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
+  end,
+})
