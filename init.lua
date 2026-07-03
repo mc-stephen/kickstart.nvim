@@ -112,6 +112,25 @@ do
   --  Experiment for yourself to see if you like it!
   vim.o.relativenumber = true
 
+  -- Use Treesitter to handle code folding dynamically
+  vim.opt.foldmethod = 'expr'
+  vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+  -- Prevent Neovim from automatically collapsing code when opening a file
+  vim.opt.foldlevel = 99
+  vim.opt.foldlevelstart = 99
+
+  -- ============================================================
+  -- THE LAZYVIM VISUAL SMOOTHNESS
+  -- ============================================================
+  vim.opt.foldtext = '' -- Tells Neovim to render the actual code line with syntax highlighting
+  vim.opt.fillchars = {
+    fold = ' ', -- Completely removes the ugly trailing dashes (---)
+    foldopen = '', -- Modern downward arrow icon
+    foldclose = '', -- Modern rightward arrow icon
+    foldsep = ' ', -- Cleans up the fold separator line
+  }
+
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
 
@@ -235,10 +254,10 @@ do
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
-  -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
-  -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
-  -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
-  -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+  -- vim.keymap.set('n', '<C-S-h>', '<C-w>H', { desc = 'Move window to the left' })
+  -- vim.keymap.set('n', '<C-S-l>', '<C-w>L', { desc = 'Move window to the right' })
+  -- vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
+  -- vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
@@ -965,6 +984,8 @@ do
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
+
+  vim.pack.add { 'https://github.com/HiPhish/rainbow-delimiters.nvim' } -- Added by mc-stephen
 
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --

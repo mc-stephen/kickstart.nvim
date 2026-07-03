@@ -1,6 +1,6 @@
 -- Set your leader key just in case it isn't global yet
-vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g.mapleader = " "
 
 -- ====================================================================
 -- WINDOW MANAGEMENT (<leader>w)
