@@ -81,15 +81,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local map = function(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
     end
-
-    -- The "Go To" family under 'g'
-    -- map('gd', function() require('snacks').picker.lsp_definitions() end, '[G]oto [D]efinition')
-    -- map('gr', function() require('snacks').picker.lsp_references() end, '[G]oto [R]eferences')
-    -- map('gI', function() require('snacks').picker.lsp_implementations() end, '[G]oto [I]mplementation')
-    -- map('gy', function() require('snacks').picker.lsp_type_definitions() end, 'Type [D]efinition')
-    -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
-    -- Documentation Hover (Show function signatures/docs)
-    -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
   end,
 })
+
+-- ====================================================================
+-- DYNAMIC LSP KEYMAPS (Activates only when a Code Engine is running)
+-- ====================================================================
+-- Toggle LSP Inlay Hints (VS Code style type/parameter annotations)
+vim.keymap.set('n', '<leader>uh', function()
+  -- Check if hints are currently on, then flip the state
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = 'Toggle: LSP Inlay Hints' })

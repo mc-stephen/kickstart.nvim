@@ -25,4 +25,11 @@ wk.add {
   { '<leader>s', group = 'Search / Find' },
   { '<leader>w', group = 'Windows' },
   { '<leader>t', group = 'Terminal' },
+  { '<leader>u', group = 'ui' },
+  { '<leader>x', group = 'diagnostics/quickfix' },
+  { '[', group = 'prev' },
+  { ']', group = 'next' },
+  { 'g', group = 'goto' },
+  -- { "gs", group = "surround" },
+  { 'z', group = 'fold' },
 }

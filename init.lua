@@ -106,6 +106,9 @@ do
   -- NOTE: You can change these options as you wish!
   --  For more options, you can see `:help option-list`
 
+  -- Show live preview of substitution commands incrementally as you type
+  vim.opt.inccommand = 'nosplit'
+  
   -- Make line numbers default
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
@@ -415,8 +418,8 @@ do
   vim.cmd.colorscheme 'tokyonight-night'
 
   -- Highlight todo, notes, etc in comments
-  vim.pack.add { gh 'folke/todo-comments.nvim' }
-  require('todo-comments').setup { signs = false }
+  -- vim.pack.add { gh 'folke/todo-comments.nvim' }
+  -- require('todo-comments').setup { signs = false }
 
   -- [[ mini.nvim ]]
   --  A collection of various small independent plugins/modules
@@ -462,7 +465,15 @@ do
   -- default behavior. For example, here we set the section for
   -- cursor location to LINE:COLUMN
   ---@diagnostic disable-next-line: duplicate-set-field
-  statusline.section_location = function() return '%2l:%-2v' end
+  statusline.section_location = function()
+    local recording = vim.fn.reg_recording()
+    if recording ~= '' then
+      -- If recording, show a bright indicator next to your line numbers
+      return '󰑋  RECORDING @' .. recording .. '  │  %2l:%-2v'
+    end
+    -- Otherwise, just show the normal line:column numbers
+    return '%2l:%-2v'
+  end
 
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
@@ -721,6 +732,8 @@ do
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
     -- ts_ls = {},
+    
+    jsonls = {}, -- Json LSP setup (use to format json code)
 
     stylua = {}, -- Used to format Lua code
 

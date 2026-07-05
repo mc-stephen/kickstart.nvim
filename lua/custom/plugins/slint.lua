@@ -1,5 +1,8 @@
 -- Pull down official Slint filetype recognition rules
 vim.pack.add { 'https://github.com/slint-ui/vim-slint' }
 
--- Tell the language engine to attach to Slint UI files
-require('lspconfig').slint_lsp.setup({})
+-- Configure the Slint language server using the modern native API
+vim.lsp.config('slint_lsp', {})
+
+-- Enable the server to automatically attach to Slint UI files
+vim.lsp.enable('slint_lsp')
