@@ -17,13 +17,27 @@ wk.setup {
 
 -- 2. Name your custom categories so they look incredible in the popup
 wk.add {
-  { '<leader>b', group = 'Buffers' },
+
+  -- DYNAMIC BUFFER EXPANDER: Automatically lists all open files in memory
+  {
+    '<leader>b',
+    group = 'Buffers',
+    expand = function() return require('which-key.extras').expand.buf() end,
+  },
+
+  -- DYNAMIC WINDOW EXPANDER & PROXY: Automatically routes to native Ctrl+W actions
+  {
+    '<leader>w',
+    group = 'Windows',
+    proxy = '<c-w>',
+    expand = function() return require('which-key.extras').expand.win() end,
+  },
+
   { '<leader>c', group = 'Code / LSP' },
   { '<leader>d', group = 'Debug / DAP' },
   { '<leader>F', group = 'Flutter / Dart 🚀' },
   { '<leader>g', group = 'Git / Lazygit' },
   { '<leader>s', group = 'Search / Find' },
-  { '<leader>w', group = 'Windows' },
   { '<leader>t', group = 'Terminal' },
   { '<leader>u', group = 'ui' },
   { '<leader>x', group = 'diagnostics/quickfix' },

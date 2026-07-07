@@ -11,7 +11,7 @@ local dap = require 'dap'
 local dapui = require 'dapui'
 
 -- 1. Clear out background auto-loaded configurations to prevent duplication
-require('dap').configurations.dart = {}
+dap.configurations.dart = {}
 
 -- Setup the visual panels
 dapui.setup()
@@ -47,6 +47,6 @@ vscode.type_to_filetypes = {
 -- This tells nvim-dap exactly how to launch the backend Dart debug engine
 dap.adapters.dart = {
   type = 'executable',
-  command = 'flutter',          -- Uses your global flutter binary
-  args = { 'debug-adapter' },   -- Tells flutter to start up in debugging mode
+  command = 'flutter', -- Uses your global flutter binary
+  args = { 'debug-adapter' }, -- Tells flutter to start up in debugging mode
 }

@@ -3,21 +3,13 @@ vim.g.maplocalleader = " "
 vim.g.mapleader = " "
 
 -- ====================================================================
+-- OTHER
+-- ====================================================================
+vim.keymap.set('n', '<leader>uc', ':Telescope colorscheme enable_preview=true<CR>', { desc = 'UI: Colorscheme Picker' })
+
+-- ====================================================================
 -- WINDOW MANAGEMENT (<leader>w)
 -- ====================================================================
-vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'Window: Split Vertically' })
-vim.keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'Window: Split Horizontally' })
-vim.keymap.set('n', '<leader>wd', '<C-w>c', { desc = 'Window: Close Current Split' })
-vim.keymap.set('n', '<leader>wo', '<C-w>o', { desc = 'Window: Close All Other Splits' })
-
--- Reset all windows to equal balance
-vim.keymap.set('n', '<leader>w=', '<C-w>=', { desc = 'Window: Make Equal Size' })
-
--- Method B: The Arrow Key Backup Way (Mac-safe sequence)
--- vim.keymap.set('n', '<leader>w<Up>',    ':resize +2<CR>',          { desc = 'Window: Resize Up (Arrow)' })
--- vim.keymap.set('n', '<leader>w<Down>',  ':resize -2<CR>',          { desc = 'Window: Resize Down (Arrow)' })
--- vim.keymap.set('n', '<leader>w<Left>',  ':vertical resize -2<CR>', { desc = 'Window: Resize Left (Arrow)' })
--- vim.keymap.set('n', '<leader>w<Right>', ':vertical resize +2<CR>', { desc = 'Window: Resize Right (Arrow)' })
 
 -- KITTY & MAC-SAFE FLUID RESIZING (Hold Alt/Option + Arrow Keys)
 vim.keymap.set('n', '<M-Up>',    ':resize +4<CR>',          { desc = 'Window: Continuous Resize Up' })
@@ -59,6 +51,7 @@ vim.keymap.set({ "n", "t" }, "<C-/>", function() Snacks.terminal.toggle() end, {
 -- ====================================================================
 -- EASILY MOVE LINES OF CODE BLOCKS
 -- ====================================================================
+
 -- Move lines up and down in Normal mode
 vim.keymap.set('n', '<C-S-Down>', '<cmd>m .+1<cr>==', { desc = 'Move line down' })
 vim.keymap.set('n', '<C-S-Up>', '<cmd>m .-2<cr>==', { desc = 'Move line up' })

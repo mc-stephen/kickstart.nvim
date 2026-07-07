@@ -36,7 +36,14 @@ require('flutter-tools').setup {
         local dart_configs = {}
 
         for _, config in ipairs(launch_configs) do
-          if config.type == 'dart' then table.insert(dart_configs, config) end
+          if config.type == 'dart' then
+            -- Here is the magic: if it's a "No Debug" option, tag it and switch it
+            if config.noDebug == true then
+              config.noDebug = false -- Forces the VM service to attach so log() works
+              config.isNoDebugProfile = true -- Remembers that this is supposed to act like Non-Debug
+            end
+            table.insert(dart_configs, config)
+          end
         end
 
         require('dap').configurations.dart = dart_configs
@@ -49,6 +56,18 @@ require('flutter-tools').setup {
     -- end,
   },
 }
+
+-- ====================================================================
+-- THE VS CODE ILLUSION ENGINE (Dynamic Exception Handler)
+-- ====================================================================
+local dap = require 'dap'
+
+dap.listeners.after.event_initialized['flutter_no_debug_handler'] = function(session)
+  if session.config and session.config.isNoDebugProfile then
+    -- If this profile was originally meant to be "No Debug", strip all exception breakpoints!
+    dap.set_exception_breakpoints {}
+  end
+end
 
 -- ====================================================================
 -- KEYMAPS: Your Flight Deck for Flutter (Capital F)
