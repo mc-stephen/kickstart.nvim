@@ -1,0 +1,176 @@
+-- vim.pack.add {
+--   'https://github.com/akinsho/flutter-tools.nvim',
+--   'https://github.com/nvim-lua/plenary.nvim', -- Required dependency
+-- }
+--
+-- require('flutter-tools').setup {
+--   ui = { border = 'rounded' },
+--   decorations = {
+--     statusline = { device = true, app_version = true },
+--   },
+--   lsp = {
+--     color_render = true, -- Shows color previews for widgets like Color.fromARGB
+--   },
+--   widget_guides = {
+--     enabled = true, -- Draws subtle lines showing widget tree nesting depths
+--   },
+--   closing_tags = {
+--     highlight = 'Comment',
+--     prefix = ' // ',
+--     enabled = true, -- Automatically places virtual text labels on ending brackets (like VS Code!)
+--   },
+--   debugger = {
+--     enabled = true,
+--     run_via_dap = true, -- Plugs natively into your new DAP visual engine
+--     register_configurations = function(paths)
+--       -- 1. Ensure the path-aware Dart debug adapter is registered
+--       require('dap').adapters.dart = {
+--         type = 'executable',
+--         command = paths.flutter_bin,
+--         args = { 'debug-adapter' },
+--       }
+--
+--       -- 2. Explicitly pull and filter configurations without using deprecated hooks
+--       if vim.fn.filereadable '.vscode/launch.json' == 1 then
+--         local launch_configs = require('dap.ext.vscode').getconfigs()
+--         local dart_configs = {}
+--
+--         for _, config in ipairs(launch_configs) do
+--           if config.type == 'dart' then
+--             -- Here is the magic: if it's a "No Debug" option, tag it and switch it
+--             if config.noDebug == true then
+--               config.noDebug = false -- Forces the VM service to attach so log() works
+--               config.isNoDebugProfile = true -- Remembers that this is supposed to act like Non-Debug
+--             end
+--             table.insert(dart_configs, config)
+--           end
+--         end
+--
+--         require('dap').configurations.dart = dart_configs
+--       end
+--     end,
+--
+--     -- register_configurations = function()
+--     --   -- 2. Automatically load and map your VS Code launch.json flavors
+--     --   require('dap.ext.vscode').load_launchjs(nil, { dart = { 'dart' } })
+--     -- end,
+--   },
+-- }
+--
+-- -- ====================================================================
+-- -- THE VS CODE ILLUSION ENGINE (Dynamic Exception Handler)
+-- -- ====================================================================
+-- local dap = require 'dap'
+--
+-- dap.listeners.after.event_initialized['flutter_no_debug_handler'] = function(session)
+--   if session.config and session.config.isNoDebugProfile then
+--     -- If this profile was originally meant to be "No Debug", strip all exception breakpoints!
+--     dap.set_exception_breakpoints {}
+--   end
+-- end
+--
+-- -- ====================================================================
+-- -- KEYMAPS: Your Flight Deck for Flutter (Capital F)
+-- -- ====================================================================
+-- vim.keymap.set('n', '<leader>Fr', ':FlutterRun<CR>', { desc = 'Flutter: Run Project' })
+-- vim.keymap.set('n', '<leader>Fq', ':FlutterQuit<CR>', { desc = 'Flutter: Terminate App' })
+-- vim.keymap.set('n', '<leader>Fd', ':FlutterDevices<CR>', { desc = 'Flutter: Select Device/Emulator' })
+-- vim.keymap.set('n', '<leader>Fl', ':FlutterLogToggle<CR>', { desc = 'Flutter: Toggle Debug Log Console' })
+-- vim.keymap.set('n', '<leader>Fh', ':FlutterReload<CR>', { desc = 'Flutter: Hot Reload App' })
+-- vim.keymap.set('n', '<leader>FH', ':FlutterRestart<CR>', { desc = 'Flutter: Hot Restart App' })
+--
+
+vim.pack.add {
+  'https://github.com/akinsho/flutter-tools.nvim',
+  'https://github.com/nvim-lua/plenary.nvim',
+}
+
+require('flutter-tools').setup {
+  ui = { border = 'rounded' },
+  decorations = {
+    statusline = { device = true, app_version = true },
+  },
+  lsp = {
+    color_render = true,
+  },
+  widget_guides = {
+    enabled = true,
+  },
+  closing_tags = {
+    highlight = 'Comment',
+    prefix = ' // ',
+    enabled = true,
+  },
+  debugger = {
+    enabled = true,
+    run_via_dap = true,
+    register_configurations = function(paths)
+      local dap = require 'dap'
+      dap.adapters.dart = {
+        type = 'executable',
+        command = paths.flutter_bin,
+        args = { 'debug-adapter' },
+      }
+
+      dap.configurations.dart = {}
+
+      -- Load VS Code configs if they exist
+      if vim.fn.filereadable '.vscode/launch.json' == 1 then
+        local vscode_configs = require('dap.ext.vscode').getconfigs()
+        for _, c in ipairs(vscode_configs) do
+          if c.type == 'dart' then table.insert(dap.configurations.dart, c) end
+        end
+      end
+
+      -- Baseline fallback config
+      if #dap.configurations.dart == 0 then
+        table.insert(dap.configurations.dart, {
+          type = 'dart',
+          request = 'launch',
+          name = 'Flutter (Default)',
+          program = 'lib/main.dart',
+          cwd = '${workspaceFolder}',
+        })
+      end
+    end,
+  },
+}
+
+-- ====================================================================
+-- THE INTERCEPTOR (Strict No-Stress Execution)
+-- ====================================================================
+local dap = require('dap')
+
+-- 1. Create a wrapper for dap.run
+local original_dap_run = dap.run
+
+-- 2. Define the injection logic
+dap.run = function(config)
+  if _G.flutter_ignore_exceptions then
+    config.noDebug = false -- Must be false for logs to flow
+    -- This tells the Dart DAP to not break on any exceptions
+    config.exceptionFailureMode = "none" 
+  end
+  original_dap_run(config)
+end
+
+-- 3. The launch function
+_G.flutter_ignore_exceptions = false
+
+local function run_flutter(is_debug)
+  _G.flutter_ignore_exceptions = not is_debug
+  vim.cmd('FlutterDebug')
+end
+
+
+-- ====================================================================
+-- KEYMAPS: Flight Deck
+-- ====================================================================
+vim.keymap.set('n', '<leader>FD', function() run_flutter(true) end)
+vim.keymap.set('n', '<leader>FR', function() run_flutter(false) end)
+
+vim.keymap.set('n', '<leader>Fq', ':FlutterQuit<CR>', { desc = 'Flutter: Terminate App' })
+vim.keymap.set('n', '<leader>Fd', ':FlutterDevices<CR>', { desc = 'Flutter: Select Device/Emulator' })
+vim.keymap.set('n', '<leader>Fl', ':FlutterLogToggle<CR>', { desc = 'Flutter: Toggle Debug Log Console' })
+vim.keymap.set('n', '<leader>Fh', ':FlutterReload<CR>', { desc = 'Flutter: Hot Reload App' })
+vim.keymap.set('n', '<leader>FH', ':FlutterRestart<CR>', { desc = 'Flutter: Hot Restart App' })

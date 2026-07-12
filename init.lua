@@ -108,7 +108,7 @@ do
 
   -- Show live preview of substitution commands incrementally as you type
   vim.opt.inccommand = 'nosplit'
-  
+
   -- Make line numbers default
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
@@ -732,7 +732,7 @@ do
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
     -- ts_ls = {},
-    
+
     jsonls = {}, -- Json LSP setup (use to format json code)
 
     stylua = {}, -- Used to format Lua code
@@ -781,6 +781,9 @@ do
 
   -- Automatically install LSPs and related tools to stdpath for Neovim
   require('mason').setup {}
+
+  -- Initialize Mason-LSPConfig
+  require('mason-lspconfig').setup {}
 
   -- Ensure the servers and tools above are installed
   --

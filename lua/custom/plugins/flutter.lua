@@ -1,6 +1,6 @@
 vim.pack.add {
   'https://github.com/akinsho/flutter-tools.nvim',
-  'https://github.com/nvim-lua/plenary.nvim', -- Required dependency
+  'https://github.com/nvim-lua/plenary.nvim',
 }
 
 require('flutter-tools').setup {
@@ -9,68 +9,48 @@ require('flutter-tools').setup {
     statusline = { device = true, app_version = true },
   },
   lsp = {
-    color_render = true, -- Shows color previews for widgets like Color.fromARGB
+    color_render = true,
   },
   widget_guides = {
-    enabled = true, -- Draws subtle lines showing widget tree nesting depths
+    enabled = true,
   },
   closing_tags = {
     highlight = 'Comment',
     prefix = ' // ',
-    enabled = true, -- Automatically places virtual text labels on ending brackets (like VS Code!)
+    enabled = true,
   },
   debugger = {
     enabled = true,
-    run_via_dap = true, -- Plugs natively into your new DAP visual engine
+    run_via_dap = true,
     register_configurations = function(paths)
-      -- 1. Ensure the path-aware Dart debug adapter is registered
-      require('dap').adapters.dart = {
-        type = 'executable',
-        command = paths.flutter_bin,
-        args = { 'debug-adapter' },
+      local dap = require 'dap'
+
+      -- Define both modes
+      local debug_config = {
+        type = 'dart',
+        request = 'launch',
+        name = 'Flutter (Debug)',
+        program = 'lib/main.dart',
+        cwd = '${workspaceFolder}',
+        noDebug = false,
       }
 
-      -- 2. Explicitly pull and filter configurations without using deprecated hooks
-      if vim.fn.filereadable '.vscode/launch.json' == 1 then
-        local launch_configs = require('dap.ext.vscode').getconfigs()
-        local dart_configs = {}
+      local no_debug_config = {
+        type = 'dart',
+        request = 'launch',
+        name = 'Flutter (No Debug)',
+        program = 'lib/main.dart',
+        cwd = '${workspaceFolder}',
+        noDebug = true,
+      }
 
-        for _, config in ipairs(launch_configs) do
-          if config.type == 'dart' then
-            -- Here is the magic: if it's a "No Debug" option, tag it and switch it
-            if config.noDebug == true then
-              config.noDebug = false -- Forces the VM service to attach so log() works
-              config.isNoDebugProfile = true -- Remembers that this is supposed to act like Non-Debug
-            end
-            table.insert(dart_configs, config)
-          end
-        end
-
-        require('dap').configurations.dart = dart_configs
-      end
+      dap.configurations.dart = { debug_config, no_debug_config }
     end,
-
-    -- register_configurations = function()
-    --   -- 2. Automatically load and map your VS Code launch.json flavors
-    --   require('dap.ext.vscode').load_launchjs(nil, { dart = { 'dart' } })
-    -- end,
   },
 }
 
 -- ====================================================================
--- THE VS CODE ILLUSION ENGINE (Dynamic Exception Handler)
--- ====================================================================
-local dap = require 'dap'
-
-dap.listeners.after.event_initialized['flutter_no_debug_handler'] = function(session)
-  if session.config and session.config.isNoDebugProfile then
-    -- If this profile was originally meant to be "No Debug", strip all exception breakpoints!
-    dap.set_exception_breakpoints {}
-  end
-end
-
--- ====================================================================
--- KEYMAPS: Your Flight Deck for Flutter (Capital F)
+-- KEYMAPS
 -- ====================================================================
 vim.keymap.set('n', '<leader>Fr', ':FlutterRun<CR>', { desc = 'Flutter: Run Project' })
 vim.keymap.set('n', '<leader>Fq', ':FlutterQuit<CR>', { desc = 'Flutter: Terminate App' })
