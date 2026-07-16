@@ -5,10 +5,20 @@ vim.pack.add {
 
 require('snacks').setup {
   image = { enabled = true },
-  picker = { enabled = true },
   lazygit = { enabled = true },
   terminal = { enabled = true },
   explorer = { enabled = true },
+  picker = {
+    enabled = true,
+    sources = {
+      explorer = {
+        layout = {
+          preview = 'main', -- Instantly shows the preview panel by default!
+          preset = 'sidebar', -- Keeps it docked as a sidebar
+        },
+      },
+    },
+  },
 }
 
 -- Open Snacks Explorer (Your sidebar)
