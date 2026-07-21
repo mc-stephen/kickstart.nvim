@@ -171,6 +171,10 @@
       "rev": "9badce3860297562bb5e80ba1666628f9e0ac632",
       "src": "https://github.com/slint-ui/vim-slint"
     },
+    "vim-wakatime": {
+      "rev": "2a856d0b7863dc34ffc80647cb52fbd1319fe144",
+      "src": "https://github.com/wakatime/vim-wakatime"
+    },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
       "src": "https://github.com/folke/which-key.nvim"
