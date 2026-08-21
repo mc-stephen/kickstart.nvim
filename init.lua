@@ -106,9 +106,6 @@ do
   -- NOTE: You can change these options as you wish!
   --  For more options, you can see `:help option-list`
 
-  -- Show live preview of substitution commands incrementally as you type
-  vim.opt.inccommand = 'nosplit'
-
   -- Make line numbers default
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
@@ -372,31 +369,10 @@ do
   --
   -- See `:help gitsigns` to understand what each configuration key does.
   -- Adds git related signs to the gutter, as well as utilities for managing changes
-  vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
-  require('gitsigns').setup {
-    signs = {
-      add = { text = '+' }, ---@diagnostic disable-line: missing-fields
-      change = { text = '~' }, ---@diagnostic disable-line: missing-fields
-      delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
-      topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
-      changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-    },
-  }
+  -- NOTE: gitsigns is configured (signs + keymaps) in `lua/custom/plugins/gitsigns.lua`
 
   -- Useful plugin to show you pending keybinds.
-  vim.pack.add { gh 'folke/which-key.nvim' }
-  require('which-key').setup {
-    -- Delay between pressing a key and opening which-key (milliseconds)
-    -- delay = 0,
-    -- icons = { mappings = vim.g.have_nerd_font },
-    -- Document existing key chains
-    spec = {
-      -- { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-      -- { '<leader>t', group = '[T]oggle' },
-      -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
-      { 'gr', group = 'LSP Actions', mode = { 'n' } },
-    },
-  }
+  -- NOTE: which-key is configured in `lua/custom/plugins/which-key.lua`
 
   -- [[ Colorscheme ]]
   -- You can easily change to a different colorscheme.
@@ -1000,8 +976,6 @@ do
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
-
-  vim.pack.add { 'https://github.com/HiPhish/rainbow-delimiters.nvim' } -- Added by mc-stephen
 
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --

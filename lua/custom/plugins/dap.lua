@@ -7,8 +7,7 @@ vim.pack.add {
 local dap = require 'dap'
 local dapui = require 'dapui'
 
--- Enable logging for debugging
-dap.set_log_level('DEBUG')
+dap.set_log_level('WARN')
 
 -- Setup the visual panels
 dapui.setup()

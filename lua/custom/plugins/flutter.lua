@@ -1,6 +1,5 @@
 vim.pack.add {
   'https://github.com/akinsho/flutter-tools.nvim',
-  'https://github.com/nvim-lua/plenary.nvim',
 }
 
 require('flutter-tools').setup {
@@ -63,13 +62,13 @@ local dap = require('dap')
 local original_dap_run = dap.run
 
 -- 2. Define the injection logic
-dap.run = function(config)
+dap.run = function(config, opts)
   if _G.flutter_ignore_exceptions then
     config.noDebug = false -- Must be false for logs to flow
     -- This tells the Dart DAP to not break on any exceptions
-    config.exceptionFailureMode = "none"
+    config.exceptionBreakpointFilters = {}
   end
-  original_dap_run(config)
+  original_dap_run(config, opts)
 end
 
 -- 3. The launch function

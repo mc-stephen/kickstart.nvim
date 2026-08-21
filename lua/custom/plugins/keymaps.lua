@@ -65,21 +65,6 @@ vim.keymap.set('v', '<C-S-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move block down'
 vim.keymap.set('v', '<C-S-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move block up' })
 
 -- ====================================================================
--- DYNAMIC LSP KEYMAPS (Activates only when a Code Engine is running)
--- ====================================================================
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-  callback = function(event)
-    -- Helper function to quickly define LSP-specific mappings
-    local map = function(keys, func, desc)
-      vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-    end
-  end,
-})
-
--- ====================================================================
--- DYNAMIC LSP KEYMAPS (Activates only when a Code Engine is running)
--- ====================================================================
 -- Toggle LSP Inlay Hints (VS Code style type/parameter annotations)
 vim.keymap.set('n', '<leader>uh', function()
   -- Check if hints are currently on, then flip the state

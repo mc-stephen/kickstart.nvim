@@ -41,6 +41,7 @@ wk.add {
   { '<leader>t', group = 'Terminal' },
   { '<leader>u', group = 'ui' },
   { '<leader>x', group = 'diagnostics/quickfix' },
+  { 'gr', group = 'LSP Actions', mode = { 'n' } },
   { '[', group = 'prev' },
   { ']', group = 'next' },
   { 'g', group = 'goto' },
