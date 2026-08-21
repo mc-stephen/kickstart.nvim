@@ -707,7 +707,11 @@ do
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
+    ts_ls = {},
+
+    tailwindcss = {}, -- Tailwind CSS class intellisense
+
+    eslint = {}, -- ESLint diagnostics (requires eslint in the project)
 
     jsonls = {}, -- Json LSP setup (use to format json code)
 
@@ -793,8 +797,17 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
-        -- python = true,
+        -- lua = true, -- formatted by stylua LSP
+        javascript = true,
+        javascriptreact = true,
+        typescript = true,
+        typescriptreact = true,
+        json = true,
+        jsonc = true,
+        css = true,
+        scss = true,
+        html = true,
+        markdown = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -812,7 +825,16 @@ do
       -- python = { "isort", "black" },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      javascript = { 'prettier', 'prettierd', stop_after_first = true },
+      javascriptreact = { 'prettier', 'prettierd', stop_after_first = true },
+      typescript = { 'prettier', 'prettierd', stop_after_first = true },
+      typescriptreact = { 'prettier', 'prettierd', stop_after_first = true },
+      json = { 'prettier', 'prettierd', stop_after_first = true },
+      jsonc = { 'prettier', 'prettierd', stop_after_first = true },
+      css = { 'prettier', 'prettierd', stop_after_first = true },
+      scss = { 'prettier', 'prettierd', stop_after_first = true },
+      html = { 'prettier', 'prettierd', stop_after_first = true },
+      markdown = { 'prettier', 'prettierd', stop_after_first = true },
     },
   }
 
