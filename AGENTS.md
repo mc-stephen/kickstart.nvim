@@ -25,6 +25,7 @@ Personal Neovim config — a fork of `kickstart.nvim` using Neovim's **built-in
 - **Augroup collision**: LSP keymaps live under augroup `kickstart-lsp-attach`. Because `lua/custom/plugins/*` loads AFTER `init.lua`, re-declaring `vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true })` in a custom file silently wipes all LSP keymaps. Use a unique augroup name in custom plugins (this bug has bitten before).
 - **One source of truth**: don't configure the same plugin in both `init.lua` and `lua/custom/plugins/` — the later `setup()` overrides the earlier one (gitsigns and which-key were consolidated into custom plugins for this reason).
 - `dap.lua` / `flutter.lua` monkey-patch `dap.run` — fragile; edit with care.
+- **sqlls npm pin**: `sql-language-server` 1.7.1 crashes on startup (`ERR_PACKAGE_PATH_NOT_EXPORTED`) because its `vscode-languageserver-protocol` resolves to 3.17+ which blocks the deep subpath it requires. Fixed by pinning: `cd ~/.local/share/nvim/mason/packages/sqlls/node_modules/sql-language-server && npm install vscode-languageserver-protocol@3.16.0 --no-save`. Re-run this if Mason ever reinstalls/updates sqlls (wipes node_modules).
 
 ## Commands
 - Verify config loads clean: `nvim --headless -c 'qa'` (exit 0 = no startup errors) — the de-facto "typecheck".

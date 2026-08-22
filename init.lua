@@ -809,6 +809,7 @@ do
         scss = true,
         html = true,
         markdown = true,
+        sql = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -836,6 +837,7 @@ do
       scss = { 'prettier', 'prettierd', stop_after_first = true },
       html = { 'prettier', 'prettierd', stop_after_first = true },
       markdown = { 'prettier', 'prettierd', stop_after_first = true },
+      sql = { 'sleek' },
     },
   }
 
@@ -861,7 +863,7 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = { 'bash', 'c', 'diff', 'html', 'latex', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'sql', 'vim', 'vimdoc' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
