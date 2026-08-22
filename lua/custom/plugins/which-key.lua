@@ -37,6 +37,7 @@ wk.add {
   { '<leader>d', group = 'Debug / DAP' },
   { '<leader>F', group = 'Flutter / Dart 🚀' },
   { '<leader>g', group = 'Git / Lazygit' },
+  { '<leader>l', group = 'LaTeX' },
   { '<leader>s', group = 'Search / Find' },
   { '<leader>t', group = 'Terminal' },
   { '<leader>u', group = 'ui' },
