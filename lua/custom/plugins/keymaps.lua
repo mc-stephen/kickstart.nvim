@@ -2,9 +2,21 @@
 vim.g.maplocalleader = " "
 vim.g.mapleader = " "
 
+-- =========================
+-- QUICK TIPS AND TRICKS
+-- =========================
+-- q + : -> view command history
+-- ~ -> Cap or Un-cap words (exp: hi -> HI)
+-- * or # -> press on any word and all the occurences of that word will be highlighted
+-- !! -> this brings up cmdline text field, to run any cmd command that output stuff, then it send it back to your vim buffer
+-- :%s/find-values/replace-value -> Find and replace, the also can be scope to visual selected block or lines
+
 -- ====================================================================
 -- OTHER
 -- ====================================================================
+vim.keymap.set('n', 'G', 'G zz') -- move to the end of buffer but also center the cursor
+vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move up but also center the cursor
+vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down but also center the cursor
 vim.keymap.set('n', '<leader>uc', ':Telescope colorscheme enable_preview=true<CR>', { desc = 'UI: Colorscheme Picker' })
 
 -- ====================================================================
