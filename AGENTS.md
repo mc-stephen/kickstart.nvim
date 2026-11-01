@@ -19,7 +19,7 @@ Personal Neovim config — a fork of `kickstart.nvim` using Neovim's **built-in
 - Servers live in the `servers` table in `init.lua` §6, then `vim.lsp.config(name, cfg)` + `vim.lsp.enable(name)`. Nvim 0.12 lazily resolves cmd/filetypes/root from lspconfig's runtime `lsp/*.lua` — don't add `require('lspconfig')`.
 - Mason auto-installs via `mason-tool-installer` (`ensure_installed = vim.tbl_keys(servers)`); lspconfig names map to Mason packages (`ts_ls`→`typescript-language-server`, `eslint`→`eslint-lsp`, `tailwindcss`→`tailwindcss-language-server`).
 - `:LspInfo` does **not** exist here. Use `:checkhealth vim.lsp` or `:lua =vim.lsp.get_clients()`.
-- LSP keymaps (`grd` def, `gra` code action, `grn` rename, `gri`/`grr`, `<leader>th` inlay hints) are buffer-local, registered on `LspAttach` — they only exist after a server attaches.
+- LSP keymaps (`grd` def, `gra` code action, `grn` rename, `gri`/`grr`) are buffer-local, registered on `LspAttach` — they only exist after a server attaches. Inlay-hint toggle is global: `<leader>uh` in `lua/custom/plugins/keymaps.lua`.
 
 ## Gotchas
 - **Augroup collision**: LSP keymaps live under augroup `kickstart-lsp-attach`. Because `lua/custom/plugins/*` loads AFTER `init.lua`, re-declaring `vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true })` in a custom file silently wipes all LSP keymaps. Use a unique augroup name in custom plugins (this bug has bitten before).

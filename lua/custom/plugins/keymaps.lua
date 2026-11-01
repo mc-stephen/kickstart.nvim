@@ -38,18 +38,20 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to Right Window' })
 -- ====================================================================
 -- BUFFER MANAGEMENT (<leader>b)
 -- ====================================================================
-vim.keymap.set('n', '<leader>bb', function() require('snacks').picker.buffers() end, { desc = 'Buffer: Pick Open File' })
-vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = 'Buffer: Close Current File' })
-vim.keymap.set('n', '<leader>bn', ':bnext<CR>',   { desc = 'Buffer: Next Tab' })
-vim.keymap.set('n', '<leader>bp', ':bprev<CR>',   { desc = 'Buffer: Previous Tab' })
+vim.keymap.set('n', '<leader>bd', function() require('snacks').bufdelete() end, { desc = 'Buffer: Close Current File (Keeps Layout)' })
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Buffer: Next Buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprev<CR>', { desc = 'Buffer: Previous Buffer' })
 
 -- ====================================================================
 -- CODE INTEL / LSP (<leader>c)
 -- ====================================================================
-vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format({ async = true }) end, { desc = 'Code: Format Buffer' })
+vim.keymap.set('n', '<leader>cf', function() require('conform').format { async = true } end, { desc = 'Code: Format Buffer' })
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code: Available Actions' })
 vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename,      { desc = 'Code: Rename Smart Variable' })
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Code: Line Diagnostics/Errors' })
+
+-- Hover preview (same as built-in K): invoke again to jump INTO the preview window, q closes it
+vim.keymap.set('n', '<M-space>', vim.lsp.buf.hover, { desc = 'Code: Hover Docs Preview (press again to focus)' })
 
 -- ====================================================================
 -- Terminal
@@ -82,3 +84,14 @@ vim.keymap.set('n', '<leader>uh', function()
   -- Check if hints are currently on, then flip the state
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = 'Toggle: LSP Inlay Hints' })
+
+-- ====================================================================
+-- Diagnostics navigation (fits the existing [x / ]x prev-next scheme)
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump { count = -1 } end, { desc = 'Diagnostic: Go to Previous' })
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump { count = 1 } end, { desc = 'Diagnostic: Go to Next' })
+
+-- ====================================================================
+-- COMMENT TOGGLE (VSCode-style) via Option + /
+-- Requires `macos_option_as_alt yes` in kitty.conf for Option to reach nvim as Alt
+vim.keymap.set('n', '<M-/>', 'gcc', { remap = true, desc = 'Comment: Toggle Current Line' })
+vim.keymap.set('x', '<M-/>', 'gcgv', { remap = true, desc = 'Comment: Toggle Selection (stays selected)' })
