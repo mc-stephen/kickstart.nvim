@@ -7,6 +7,10 @@ vim.pack.add {
 -- Activate and style the floating command bar UI
 require('noice').setup {
   lsp = {
+    -- Noice's custom hover view is disabled: hover renders natively instead,
+    -- inheriting the rounded `winborder` frame + FloatBorder ink + the
+    -- ' Hover Docs ' title — the same look as the <leader>cd diagnostic float.
+    hover = { enabled = false },
     -- Override markdown rendering so documentation looks flawless
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,

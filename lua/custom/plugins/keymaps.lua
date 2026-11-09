@@ -35,6 +35,13 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to Lower Window' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to Upper Window' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to Right Window' })
 
+-- Alt-Tab style window cycling (kitty's macos_option_as_alt hands Opt / Shift+Opt to nvim)
+-- Inside the terminal (t mode): hop between splits without leaving the terminal
+vim.keymap.set('n', '<M-Tab>', '<C-w>w', { desc = 'Window: Cycle Next Split (Opt+Tab)' })
+vim.keymap.set('n', '<M-S-Tab>', '<C-w>W', { desc = 'Window: Cycle Previous Split (Shift+Opt+Tab)' })
+vim.keymap.set('t', '<M-Tab>', '<C-w>w', { desc = 'Window: Cycle Next Split (Opt+Tab)' })
+vim.keymap.set('t', '<M-S-Tab>', '<C-w>W', { desc = 'Window: Cycle Previous Split (Shift+Opt+Tab)' })
+
 -- ====================================================================
 -- BUFFER MANAGEMENT (<leader>b)
 -- ====================================================================
@@ -51,7 +58,8 @@ vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename,      { desc = 'Code: Renam
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Code: Line Diagnostics/Errors' })
 
 -- Hover preview (same as built-in K): invoke again to jump INTO the preview window, q closes it
-vim.keymap.set('n', '<M-space>', vim.lsp.buf.hover, { desc = 'Code: Hover Docs Preview (press again to focus)' })
+-- Title is themed via FloatTitle; border comes from the global `winborder` ('rounded')
+vim.keymap.set('n', '<M-space>', function() vim.lsp.buf.hover { title = ' Hover Docs ', title_pos = 'left' } end, { desc = 'Code: Hover Docs Preview (press again to focus)' })
 
 -- ====================================================================
 -- Terminal
